@@ -18,7 +18,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18 # Use a stable LTS version like 18 (22 is not stable yet)
+          node-version: 18 # Use a stable LTS version like 18
 
       # Step 3: Install dependencies
       - name: Install dependencies
@@ -28,7 +28,11 @@ jobs:
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
-      # Step 5: Build the app using EAS
+      # Step 5: Run ESLint to check for linting issues
+      - name: Run ESLint
+        run: npm run lint
+
+      # Step 6: Build the app using EAS
       - name: Build with EAS
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
