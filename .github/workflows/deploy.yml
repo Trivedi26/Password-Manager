@@ -32,6 +32,7 @@ jobs:
       - name: Authenticate with Expo using token
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          EAS_SKIP_AUTO_FINGERPRINT: 1
         run: echo "Authenticated with Expo"
 
       # Step 6: Build the app using EAS

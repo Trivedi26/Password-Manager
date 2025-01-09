@@ -3,6 +3,7 @@
     "name": "Trial",
     "slug": "Trial",
     "version": "1.0.0",
+    
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -12,6 +13,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.Trial.trial",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
