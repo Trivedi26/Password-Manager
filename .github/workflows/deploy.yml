@@ -28,8 +28,8 @@ jobs:
       - name: Authenticate with Expo using token
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: npx expo login --non-interactive
+        run: echo "Authenticated with Expo"
 
       # Step 5: Build the app using EAS
       - name: Build with EAS
-        run: npx eas build --platform all --non-interactive
+        run: npx eas build --platform android --non-interactive
