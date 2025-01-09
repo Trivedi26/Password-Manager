@@ -36,6 +36,21 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "cae29f45-1d44-486b-ac00-16348eac15dc"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/cae29f45-1d44-486b-ac00-16348eac15dc"
+    },
+    "owner": "shubhamtrivedi26"
   }
 }
