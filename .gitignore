@@ -1,15 +1,16 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+# ✅ GitHub's standard JS ignore
+# Learn more: https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
-# dependencies
+# 🧶 Dependencies
 node_modules/
 
-# Expo
+# 🚀 Expo
 .expo/
 dist/
 web-build/
 expo-env.d.ts
 
-# Native
+# 📱 Native
 *.orig.*
 *.jks
 *.p8
@@ -17,24 +18,41 @@ expo-env.d.ts
 *.key
 *.mobileprovision
 
-# Metro
+# ⚙️ Metro cache
 .metro-health-check*
 
-# debug
+# 🪲 Debug
 npm-debug.*
 yarn-debug.*
 yarn-error.*
 
-# macOS
+# 🍎 macOS
 .DS_Store
 *.pem
 
-# local env files
+# 🔐 Secure / Private
+.env*
 .env*.local
+credentials/
+credentials.json
 
-# typescript
+# 💡 TypeScript
 *.tsbuildinfo
 
-#secure
-.json
-app-example
+# 🧪 Test coverage (optional)
+coverage/
+
+# 💥 Expo example files / temp
+app-example/
+scripts/
+
+# 💼 IDE / Editor
+.vscode/
+.idea/
+
+# 🛠️ EAS build cache
+.build/
+artifacts/
+
+# ⚠️ JSON (optional — REMOVE this line if you have legit .json config files)
+# *.json  <-- REMOVE this if you're committing things like `app.json`, `eas.json`
