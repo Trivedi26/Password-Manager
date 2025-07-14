@@ -17,28 +17,32 @@ export default function Page() {
   );
 }
 
+const COLORS = {
+  subtitle: "#38434D",
+};
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
+    flex: 1,
     padding: 24,
   },
   main: {
-    flex: 1,
-    justifyContent: "center",
-    maxWidth: 960,
-    marginHorizontal: "auto",
-    gap: 15,
-    borderRadius:8
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: "bold",
     borderRadius: 8,
+    flex: 1,
+    gap: 15,
+    justifyContent: "center",
+    marginHorizontal: "auto",
+    maxWidth: 960,
   },
   subtitle: {
+    color: COLORS.subtitle,
     fontSize: 20,
-    color: "#38434D",
     marginBottom: 20,
+  },
+  title: {
+    borderRadius: 8,
+    fontSize: 32,
+    fontWeight: "bold",
   },
 });

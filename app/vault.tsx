@@ -1,12 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { View, Text, Button, Alert } from 'react-native';
 import * as LocalAuthentication from 'expo-local-authentication';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+type RootStackParamList = {
+  'PIN Vault': undefined;
+  'Add PIN': undefined;
+  Lock: undefined;
+};
 
 export default function LockScreen() {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  const authenticate = async () => {
+  const authenticate = useCallback(async () => {
     const hasHardware = await LocalAuthentication.hasHardwareAsync();
     const isEnrolled = await LocalAuthentication.isEnrolledAsync();
 
@@ -28,11 +35,11 @@ export default function LockScreen() {
     } else {
       Alert.alert('Failed', 'Authentication failed. Try again.');
     }
-  };
+  }, [navigation]);
 
   useEffect(() => {
     authenticate();
-  }, []);
+  }, [authenticate]);
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

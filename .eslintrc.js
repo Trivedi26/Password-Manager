@@ -1,14 +1,42 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
-  extends: ['expo', 'plugin:@typescript-eslint/recommended'],
-  ignorePatterns: ['node_modules/', 'dist/'],
   parserOptions: {
     ecmaVersion: 2021,
     sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
+  plugins: [
+    '@typescript-eslint',
+    'react',
+    'react-native',
+    'import',
+    'react-hooks',
+  ],
+  extends: [
+    'expo',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'plugin:react-native/all',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
+    'plugin:react-hooks/recommended',
+  ],
+  ignorePatterns: ['node_modules/', 'dist/'],
   rules: {
-    // Optional custom rules
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-require-imports': 'error',
+    'import/no-unresolved': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+    'react/react-in-jsx-scope': 'off', // not needed in React 17+
+    'react-native/no-inline-styles': 'off', // allow inline styles if needed
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
   },
 };

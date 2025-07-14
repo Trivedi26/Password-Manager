@@ -3,11 +3,18 @@ import { View, TextInput, Button, Alert } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
 import { v4 as uuidv4 } from 'uuid';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+type RootStackParamList = {
+  'PIN Vault': undefined;
+  'Add PIN': undefined;
+  Lock: undefined;
+};
 
 export default function AddPinScreen() {
   const [title, setTitle] = useState('');
   const [value, setValue] = useState('');
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const savePin = async () => {
     if (!title || !value) {

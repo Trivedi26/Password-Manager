@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "prepare": "husky install"
   },
-    "lint-staged": {
+  "lint-staged": {
     "*.{ts,tsx}": "eslint --fix"
   },
   "jest": {
@@ -58,6 +58,7 @@
     "@types/uuid": "^10.0.0",
     "eslint": "^8.57.0",
     "eslint-config-expo": "~8.0.1",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.3",
     "eslint-plugin-react-native": "^5.0.0",
     "globals": "^15.14.0",
