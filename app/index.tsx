@@ -28,10 +28,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     maxWidth: 960,
     marginHorizontal: "auto",
+    gap: 15,
+    borderRadius:8
   },
   title: {
     fontSize: 32,
     fontWeight: "bold",
+    borderRadius: 8,
   },
   subtitle: {
     fontSize: 20,
