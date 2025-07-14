@@ -2,6 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Button, FlatList, TouchableOpacity } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+// 🔽 Inline type definition here
+type RootStackParamList = {
+  'Lock': undefined;
+  'PIN Vault': undefined;
+  'Add PIN': undefined;
+};
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'PIN Vault'>;
 
 interface PinItem {
   id: string;
@@ -11,7 +21,7 @@ interface PinItem {
 
 export default function HomeScreen() {
   const [pins, setPins] = useState<PinItem[]>([]);
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<NavigationProp>();
   const isFocused = useIsFocused();
 
   const loadPins = async () => {
@@ -31,7 +41,9 @@ export default function HomeScreen() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity style={{ marginTop: 15 }}>
-            <Text style={{ fontSize: 16 }}>{item.title}: {item.value}</Text>
+            <Text style={{ fontSize: 16 }}>
+              {item.title}: {item.value}
+            </Text>
           </TouchableOpacity>
         )}
       />
