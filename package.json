@@ -10,7 +10,7 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "eslint .",
-    "prepare": "husky"
+    "prepare": "husky install"
   },
     "lint-staged": {
     "*.{ts,tsx}": "eslint --fix"
