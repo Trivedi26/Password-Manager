@@ -1,35 +1,37 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, Alert } from 'react-native';
-import * as SecureStore from 'expo-secure-store';
-import { useNavigation } from '@react-navigation/native';
-import { v4 as uuidv4 } from 'uuid';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useState } from "react";
+import { View, TextInput, Button, Alert } from "react-native";
+import * as SecureStore from "expo-secure-store";
+import { useNavigation } from "@react-navigation/native";
+import { v4 as uuidv4 } from "uuid";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type RootStackParamList = {
-  'PIN Vault': undefined;
-  'Add PIN': undefined;
+  "PIN Vault": undefined;
+  "Add PIN": undefined;
   Lock: undefined;
 };
 
 export default function AddPinScreen() {
-  const [title, setTitle] = useState('');
-  const [value, setValue] = useState('');
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const [title, setTitle] = useState("");
+  const [value, setValue] = useState("");
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const savePin = async () => {
     if (!title || !value) {
-      Alert.alert('Missing Fields', 'Both fields are required.');
+      Alert.alert("Missing Fields", "Both fields are required.");
       return;
     }
 
-    const pinsStr = await SecureStore.getItemAsync('pins');
+    const pinsStr = await SecureStore.getItemAsync("pins");
     const pins = pinsStr ? JSON.parse(pinsStr) : [];
 
     const newPin = { id: uuidv4(), title, value };
     pins.push(newPin);
 
-    await SecureStore.setItemAsync('pins', JSON.stringify(pins));
-    Alert.alert('Saved', 'PIN saved successfully!');
+    await SecureStore.setItemAsync("pins", JSON.stringify(pins));
+    Alert.alert("Saved", "PIN saved successfully!");
     navigation.goBack();
   };
 
