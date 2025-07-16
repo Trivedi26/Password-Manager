@@ -1,13 +1,14 @@
+// eslint-disable-next-line react-native/no-color-literals
 import React, { useEffect, useCallback } from "react";
-import { View, Text, Button, Alert } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import * as LocalAuthentication from "expo-local-authentication";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type RootStackParamList = {
-  "PIN Vault": undefined;
-  "Add PIN": undefined;
-  Lock: undefined;
+  vault: undefined; // this must match your actual route file name
+  add: undefined;
+  lock: undefined;
 };
 
 export default function LockScreen() {
@@ -32,14 +33,13 @@ export default function LockScreen() {
 
     const result = await LocalAuthentication.authenticateAsync({
       promptMessage: "Unlock PIN Vault",
-      fallbackLabel: "Enter PIN",
+      fallbackLabel: "Use Device Passcode",
     });
 
     console.log("🔍 Auth result:", result);
 
     if (result.success) {
-      // Use `navigate` instead of `reset` to avoid navigator not handled error
-      navigation.navigate("PIN Vault");
+      navigation.navigate("vault"); // ✅ fixed
     } else {
       Alert.alert("Failed", "Authentication failed. Try again.");
     }
@@ -51,9 +51,46 @@ export default function LockScreen() {
   }, [authenticate]);
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text style={{ fontSize: 20, marginBottom: 20 }}>Authenticating...</Text>
-      <Button title="Retry" onPress={authenticate} />
+    <View style={styles.container}>
+      <Text style={styles.title}>🔐 PIN Vault Locked</Text>
+      <Text style={styles.subtitle}>Authenticating with biometrics...</Text>
+
+      <TouchableOpacity style={styles.button} onPress={authenticate}>
+        <Text style={styles.buttonText}>🔁 Retry</Text>
+      </TouchableOpacity>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: "#00c6ff",
+    borderRadius: 10,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  container: {
+    alignItems: "center",
+    backgroundColor: "#0f2027",
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+  },
+  subtitle: {
+    color: "#aaa",
+    fontSize: 16,
+    marginBottom: 30,
+    textAlign: "center",
+  },
+  title: {
+    color: "#fff",
+    fontSize: 28,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+});

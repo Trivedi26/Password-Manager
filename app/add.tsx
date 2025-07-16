@@ -1,5 +1,15 @@
+// eslint-disable-next-line react-native/no-color-literals
 import React, { useState } from "react";
-import { View, TextInput, Button, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { useNavigation } from "@react-navigation/native";
 import { v4 as uuidv4 } from "uuid";
@@ -14,7 +24,6 @@ type RootStackParamList = {
 export default function AddPinScreen() {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState("");
-
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -31,26 +40,93 @@ export default function AddPinScreen() {
     pins.push(newPin);
 
     await SecureStore.setItemAsync("pins", JSON.stringify(pins));
-    Alert.alert("Saved", "PIN saved successfully!");
+    Alert.alert("Saved ✅", "Your PIN has been saved securely.");
     navigation.goBack();
   };
 
   return (
-    <View style={{ flex: 1, padding: 20 }}>
-      <TextInput
-        placeholder="PIN Title (e.g., ATM)"
-        value={title}
-        onChangeText={setTitle}
-        style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
-      />
-      <TextInput
-        placeholder="PIN Number"
-        value={value}
-        onChangeText={setValue}
-        secureTextEntry
-        style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
-      />
-      <Button title="Save PIN" onPress={savePin} />
-    </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={styles.container}
+    >
+      <View style={styles.card}>
+        <Text style={styles.heading}>Add a New PIN 🔐</Text>
+
+        <TextInput
+          placeholder="PIN Title (e.g., HDFC ATM)"
+          placeholderTextColor="#888"
+          value={title}
+          onChangeText={setTitle}
+          style={styles.input}
+        />
+
+        <TextInput
+          placeholder="PIN Number"
+          placeholderTextColor="#888"
+          value={value}
+          onChangeText={setValue}
+          secureTextEntry
+          style={styles.input}
+        />
+
+        <TouchableOpacity style={styles.button} onPress={savePin}>
+          <Text style={styles.buttonText}>💾 Save PIN</Text>
+        </TouchableOpacity>
+
+        <Text style={styles.helperText}>
+          Your PIN is stored locally and securely.
+        </Text>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
+
+const styles = StyleSheet.create({
+  button: {
+    alignItems: "center",
+    backgroundColor: "#00c6ff",
+    borderRadius: 10,
+    marginTop: 8,
+    padding: 14,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  card: {
+    backgroundColor: "#1e2a38",
+    borderRadius: 16,
+    elevation: 6,
+    padding: 24,
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+  },
+  container: {
+    backgroundColor: "#0f2027",
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 24,
+  },
+  heading: {
+    color: "#fff",
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 24,
+    textAlign: "center",
+  },
+  helperText: {
+    color: "#ccc",
+    fontSize: 13,
+    marginTop: 12,
+    textAlign: "center",
+  },
+  input: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    fontSize: 16,
+    marginBottom: 16,
+    padding: 12,
+  },
+});
