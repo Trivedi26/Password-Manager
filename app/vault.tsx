@@ -1,73 +1,77 @@
 // eslint-disable-next-line react-native/no-color-literals
-import React, { useEffect, useCallback } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
-import * as LocalAuthentication from "expo-local-authentication";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  StatusBar,
+  Platform,
+} from "react-native";
+import { useRouter } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
+import Animated, { FadeInDown } from "react-native-reanimated";
+import Constants from "expo-constants";
 
-type RootStackParamList = {
-  vault: undefined; // this must match your actual route file name
-  add: undefined;
-  lock: undefined;
-};
-
-export default function LockScreen() {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
-  const authenticate = useCallback(async () => {
-    console.log("🔐 Authentication started");
-
-    const hasHardware = await LocalAuthentication.hasHardwareAsync();
-    const isEnrolled = await LocalAuthentication.isEnrolledAsync();
-
-    console.log(`📱 Has hardware: ${hasHardware}, Is enrolled: ${isEnrolled}`);
-
-    if (!hasHardware || !isEnrolled) {
-      Alert.alert(
-        "Error",
-        "Biometric authentication is not supported or not set up."
-      );
-      return;
-    }
-
-    const result = await LocalAuthentication.authenticateAsync({
-      promptMessage: "Unlock PIN Vault",
-      fallbackLabel: "Use Device Passcode",
-    });
-
-    console.log("🔍 Auth result:", result);
-
-    if (result.success) {
-      navigation.navigate("vault"); // ✅ fixed
-    } else {
-      Alert.alert("Failed", "Authentication failed. Try again.");
-    }
-  }, [navigation]);
-
-  useEffect(() => {
-    console.log("🚀 LockScreen mounted");
-    authenticate();
-  }, [authenticate]);
+export default function Page() {
+  const router = useRouter();
+  const appVersion = Constants.expoConfig?.version || "1.0.0";
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>🔐 PIN Vault Locked</Text>
-      <Text style={styles.subtitle}>Authenticating with biometrics...</Text>
+    <LinearGradient
+      colors={["#0f2027", "#203a43", "#2c5364"]}
+      style={styles.container}
+    >
+      <StatusBar barStyle="light-content" />
 
-      <TouchableOpacity style={styles.button} onPress={authenticate}>
-        <Text style={styles.buttonText}>🔁 Retry</Text>
-      </TouchableOpacity>
-    </View>
+      <Animated.View entering={FadeInDown.duration(700)} style={styles.main}>
+        <Text style={styles.icon}>🔐</Text>
+        <Text style={styles.title}>PIN Vault</Text>
+        <Text style={styles.subtitle}>Secure your secrets smartly.</Text>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.push("./vault")}
+        >
+          <Text style={styles.buttonText}>🔎 View Vault</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.push("./add")}
+        >
+          <Text style={styles.buttonText}>➕ Add New PIN</Text>
+        </TouchableOpacity>
+
+        <View style={styles.badges}>
+          <Text style={styles.badge}>✅ 100% Offline & Secure</Text>
+          <Text style={styles.badge}>✅ Biometric Authentication</Text>
+          <Text style={styles.badge}>✅ Easy & Fast Access</Text>
+        </View>
+      </Animated.View>
+
+      <Text style={styles.footer}>v{appVersion} • Made with ❤️ by Shubham</Text>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
+  badge: {
+    color: "#a0e7ff",
+    fontSize: 14,
+    textAlign: "center",
+  },
+  badges: {
+    gap: 8,
+    marginTop: 20,
+  },
   button: {
+    alignItems: "center",
     backgroundColor: "#00c6ff",
     borderRadius: 10,
+    elevation: Platform.OS === "android" ? 3 : 0,
     paddingHorizontal: 24,
     paddingVertical: 12,
+    width: "100%",
   },
   buttonText: {
     color: "#fff",
@@ -76,21 +80,40 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: "center",
-    backgroundColor: "#0f2027",
     flex: 1,
     justifyContent: "center",
-    padding: 20,
+    paddingHorizontal: 24,
+  },
+  footer: {
+    bottom: 20,
+    color: "#999",
+    fontSize: 12,
+    position: "absolute",
+    textAlign: "center",
+  },
+  icon: {
+    fontSize: 56,
+  },
+  main: {
+    alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0.05)",
+    borderColor: "#00c6ff",
+    borderRadius: 20,
+    borderWidth: 1,
+    gap: 16,
+    maxWidth: 400,
+    padding: 24,
+    width: "100%",
   },
   subtitle: {
-    color: "#aaa",
+    color: "#ccc",
     fontSize: 16,
-    marginBottom: 30,
     textAlign: "center",
   },
   title: {
     color: "#fff",
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: "bold",
-    marginBottom: 10,
+    textAlign: "center",
   },
 });
