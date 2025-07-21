@@ -25,7 +25,7 @@ export default function LoginScreen() {
       Toast.show({
         type: "error",
         text1: "Missing Fields",
-        text2: "Please enter both email and password",
+        text2: "Please entered both email and password",
       });
       return;
     }
