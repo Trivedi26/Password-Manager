@@ -1,4 +1,3 @@
-// eslint-disable-next-line react-native/no-color-literals
 import React, { useState } from "react";
 import {
   View,
@@ -11,21 +10,12 @@ import {
   Platform,
 } from "react-native";
 import * as SecureStore from "expo-secure-store";
-import { useNavigation } from "@react-navigation/native";
 import { v4 as uuidv4 } from "uuid";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-
-type RootStackParamList = {
-  "PIN Vault": undefined;
-  "Add PIN": undefined;
-  Lock: undefined;
-};
+import { router } from "expo-router";
 
 export default function AddPinScreen() {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState("");
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const savePin = async () => {
     if (!title || !value) {
@@ -41,7 +31,7 @@ export default function AddPinScreen() {
 
     await SecureStore.setItemAsync("pins", JSON.stringify(pins));
     Alert.alert("Saved ✅", "Your PIN has been saved securely.");
-    navigation.goBack();
+    router.back(); // 👈 this replaces navigation.goBack()
   };
 
   return (
