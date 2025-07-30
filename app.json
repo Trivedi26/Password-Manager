@@ -14,14 +14,14 @@
     "android": {
       "package": "com.Trial.trial",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/pinkeeper.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/pinkeeper.png"
     },
     "plugins": [
       [
