@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Password Manager",
-    "slug": "PasswordManager",
+    "name": "Pin Keeper",
+    "slug": "pinkeeper",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/pinkeeper.png",
