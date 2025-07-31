@@ -12,7 +12,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.Trial.trial",
+      "package": "com.Pinkeeper.pinkeeper",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/pinkeeper.png",
         "backgroundColor": "#ffffff"
@@ -45,7 +45,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "cae29f45-1d44-486b-ac00-16348eac15dc"
+        "projectId": "75c4f933-56ec-4252-8b77-eacdbe77f3f3"
       }
     },
     "runtimeVersion": {
