@@ -10,9 +10,24 @@ import {
   Platform,
 } from "react-native";
 import * as SecureStore from "expo-secure-store";
-import { v4 as uuidv4 } from "uuid";
+import * as Crypto from "expo-crypto";
 import { router } from "expo-router";
 
+const generateUUID = async () => {
+  const randomBytes = await Crypto.getRandomBytesAsync(16);
+  const hex = Array.from(randomBytes)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+
+  return [
+    hex.substring(0, 8),
+    hex.substring(8, 12),
+    "4" + hex.substring(13, 16),
+    (8 + (parseInt(hex.substring(16, 1), 16) % 4)).toString(16) +
+      hex.substring(17, 20),
+    hex.substring(20, 32),
+  ].join("-");
+};
 export default function AddPinScreen() {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState("");
@@ -23,15 +38,24 @@ export default function AddPinScreen() {
       return;
     }
 
-    const pinsStr = await SecureStore.getItemAsync("pins");
-    const pins = pinsStr ? JSON.parse(pinsStr) : [];
+    try {
+      const pinsStr = await SecureStore.getItemAsync("pins");
+      const pins = pinsStr ? JSON.parse(pinsStr) : [];
 
-    const newPin = { id: uuidv4(), title, value };
-    pins.push(newPin);
+      console.log("📌 Existing Pins Before Add:", pins);
 
-    await SecureStore.setItemAsync("pins", JSON.stringify(pins));
-    Alert.alert("Saved ✅", "Your PIN has been saved securely.");
-    router.back(); // 👈 this replaces navigation.goBack()
+      const newPin = { id: await generateUUID(), title, value };
+      pins.push(newPin);
+
+      await SecureStore.setItemAsync("pins", JSON.stringify(pins));
+      console.log("✅ PIN Saved:", newPin);
+
+      Alert.alert("Saved ✅", "Your PIN has been saved securely.");
+      router.back(); // Go back to previous screen
+    } catch (error) {
+      console.error("❌ Error saving PIN:", error);
+      Alert.alert("Error", "Something went wrong while saving your PIN.");
+    }
   };
 
   return (

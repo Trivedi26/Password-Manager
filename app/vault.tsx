@@ -30,7 +30,7 @@ export default function Page() {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => router.push("./vault")}
+          onPress={() => router.push("/viewPin")}
         >
           <Text style={styles.buttonText}>🔎 View Vault</Text>
         </TouchableOpacity>
