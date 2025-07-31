@@ -18,23 +18,23 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18 # Use a stable LTS version like 18
+          node-version: 18
 
       # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Install EAS CLI
+      # Step 4: Install EAS CLI globally
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
-      # Step 5: Run ESLint to check for linting issues
+      # Step 5: Lint the codebase
       - name: Run ESLint
         run: npm run lint
 
-      # Step 6: Build the app using EAS
-      - name: Build with EAS
+      # Step 6: Build APK with EAS
+      - name: Build APK with EAS
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
           EAS_SKIP_AUTO_FINGERPRINT: 1
-        run: eas build --platform android --non-interactive
+        run: eas build --platform android --profile preview --non-interactive
