@@ -55,5 +55,8 @@
       "url": "https://u.expo.dev/cae29f45-1d44-486b-ac00-16348eac15dc"
     },
     "owner": "shubhamtrivedi26"
+  },
+  "cli": {
+    "appVersionSource": "remote"
   }
 }
