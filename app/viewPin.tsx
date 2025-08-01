@@ -26,7 +26,7 @@ export default function ViewPinScreen() {
       try {
         const stored = await SecureStore.getItemAsync("pins");
 
-        console.log("📥 Loaded Pins:", stored); // ← Add this line
+        console.log("📥 Loaded Pins:", stored);
         if (stored) {
           setPins(JSON.parse(stored));
         }
@@ -40,7 +40,7 @@ export default function ViewPinScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.heading}>🔐 Your Saved PINs</Text>
+      <Text style={styles.heading}>🔐 Your Saved PINss</Text>
 
       {pins.length === 0 ? (
         <Text style={styles.emptyText}>No PINs saved yet.</Text>
