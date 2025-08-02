@@ -43,7 +43,7 @@ export default function ViewPinScreen() {
       <Text style={styles.heading}>🔐 Your Saved PINss</Text>
 
       {pins.length === 0 ? (
-        <Text style={styles.emptyText}>No PINs saved yet.</Text>
+        <Text style={styles.emptyText}>No PINs saved yet...</Text>
       ) : (
         <FlatList
           data={pins}
